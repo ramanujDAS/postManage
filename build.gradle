@@ -1,6 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.7.10"
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 version = "0.1"
@@ -16,6 +17,7 @@ dependencies {
     implementation("io.micronaut:micronaut-jackson-databind")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("org.slf4j:slf4j-api:2.0.7")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 
@@ -23,8 +25,6 @@ application {
     mainClass.set("com.example.Application")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("1.8")
-    targetCompatibility = JavaVersion.toVersion("1.8")
 }
 
 graalvmNative.toolchainDetection = false
@@ -35,6 +35,9 @@ micronaut {
         incremental(true)
         annotations("com.example.*")
     }
+}
+kotlin {
+    jvmToolchain(8)
 }
 
 

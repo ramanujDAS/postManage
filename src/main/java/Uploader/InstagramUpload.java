@@ -1,12 +1,10 @@
 package Uploader;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class InstagramUpload implements SocialMediaUploader {
 
-    final private String uploadPath;
-
-    public InstagramUpload(String uploadPath) {
-        this.uploadPath = uploadPath;
-    }
 
     @Override
     public boolean isPostValid(PostAttributes postAttributes) {
@@ -15,6 +13,9 @@ public class InstagramUpload implements SocialMediaUploader {
 
     @Override
     public boolean uploadPost(PostAttributes postAttributes) {
+        log.info("uploading to Instagram  {}", postAttributes);
+
+
         return false;
     }
 }

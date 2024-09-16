@@ -5,3 +5,16 @@ netty:
   default:
     allocator:
       max-order: 3
+socialMediaUploader:
+  - name: instagram
+    credentials:
+      userName: userName
+      password: password
+      clientId: clientId
+  - name: facebook
+    credentials:
+      userName: userName
+      password: password
+      clientId: clientId
+
+

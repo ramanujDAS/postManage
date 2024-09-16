@@ -1,11 +1,13 @@
 package Uploader;
 
+import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Singleton
 public class PostUploader {
 
     private final List<SocialMediaUploader> socialMediaUploader; // <1>
