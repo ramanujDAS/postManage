@@ -1,7 +1,7 @@
 package Uploader;
 
 public interface SocialMediaUploader {
-    boolean isFileValid(String filePath);
+    boolean isPostValid(PostAttributes postAttributes);
 
-    boolean uploadFile(String filePath);
+    boolean uploadPost(PostAttributes  postAttributes);
 }

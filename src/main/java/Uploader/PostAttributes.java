@@ -2,13 +2,15 @@ package Uploader;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
 @Setter
-public class UploadAttributes {
+@ToString
+public class PostAttributes {
 
     @NotNull
     private String filePath;

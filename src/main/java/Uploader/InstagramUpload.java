@@ -9,12 +9,12 @@ public class InstagramUpload implements SocialMediaUploader {
     }
 
     @Override
-    public boolean isFileValid(String filePath) {
+    public boolean isPostValid(PostAttributes postAttributes) {
         return false;
     }
 
     @Override
-    public boolean uploadFile(String filePath) {
+    public boolean uploadPost(PostAttributes postAttributes) {
         return false;
     }
 }
