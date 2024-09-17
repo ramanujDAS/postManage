@@ -20,8 +20,12 @@ public class PostManage {
    }
 
    public void uploadPost(List<Post> postAttributes) {
-      postAttributes.forEach(postUploader::uploadPost);
+
+       for (Post postAttribute : postAttributes) {
+           postUploader.uploadPost(postAttribute);
+       }
    }
+
 
    public int getCountByUser(String userName) {
       return 0;
@@ -39,7 +43,7 @@ public class PostManage {
 
 
     private ArrayList<ISocialMediaUploader> getSocialMediaUploaders() {
-      ArrayList<ISocialMediaUploader> socialMediaUploader = new ArrayList<>();
+      ArrayList<ISocialMediaUploader> socialMediaUploaders = new ArrayList<>();
 
        if (config != null && config.getPlatforms() == null) {
           throw new RuntimeException("Invalid Social Media");
@@ -49,14 +53,14 @@ public class PostManage {
         config.getPlatforms().forEach(platform -> {
          switch (SocialMedia.valueOf(platform.getName())) {
             case FACEBOOK:
-               socialMediaUploader.add(new FaceBookUpload());
+               socialMediaUploaders.add(new FaceBookUpload());
             case INSTAGRAM:
-               socialMediaUploader.add(new InstagramUpload());
+               socialMediaUploaders.add(new InstagramUpload());
             default:
                throw new RuntimeException("Invalid Social Media");
          }
       });
-      return socialMediaUploader;
+      return socialMediaUploaders;
    }
 
    }

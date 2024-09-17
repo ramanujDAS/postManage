@@ -19,7 +19,5 @@ public class Post {
     private String caption;
     private List<String> hashTags;
     private String location;
-    @NotNull
-    private Credentials credentials;
 
 }

@@ -12,7 +12,7 @@ public class PostUploader {
 
     private final List<ISocialMediaUploader> socialMediaUploader; // <1>
 
-    public PostUploader(List<ISocialMediaUploader> uploader) {
+    public PostUploader(List<ISocialMediaUploader> uploader ) {
         this.socialMediaUploader = new ArrayList<>(uploader);
     }
 

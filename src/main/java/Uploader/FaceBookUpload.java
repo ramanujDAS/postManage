@@ -10,4 +10,9 @@ public class FaceBookUpload implements ISocialMediaUploader {
     public boolean uploadPost(Post postAttributes) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "FACEBOOK";
+    }
 }
