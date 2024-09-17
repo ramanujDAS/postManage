@@ -3,7 +3,6 @@ package Uploader;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +15,11 @@ public class PostManage {
    @Inject
    private  SocialMediaConfig config;
 
-    public PostManage(PostUploader postUploader) {
-        this.postUploader = new PostUploader(getSocialMediaUploaders());
-    }
+   public PostManage() {
+      this.postUploader = new PostUploader(getSocialMediaUploaders());
+   }
 
-   public void uploadPost(List<PostAttributes> postAttributes) {
+   public void uploadPost(List<Post> postAttributes) {
       postAttributes.forEach(postUploader::uploadPost);
    }
 
@@ -39,23 +38,25 @@ public class PostManage {
    }
 
 
-    private ArrayList<SocialMediaUploader> getSocialMediaUploaders() {
-      ArrayList<SocialMediaUploader> socialMediaUploaders = new ArrayList<>();
+    private ArrayList<ISocialMediaUploader> getSocialMediaUploaders() {
+      ArrayList<ISocialMediaUploader> socialMediaUploader = new ArrayList<>();
 
        if (config != null && config.getPlatforms() == null) {
           throw new RuntimeException("Invalid Social Media");
        }
+        assert config != null;
+
         config.getPlatforms().forEach(platform -> {
          switch (SocialMedia.valueOf(platform.getName())) {
             case FACEBOOK:
-               socialMediaUploaders.add(new FaceBookUpload());
+               socialMediaUploader.add(new FaceBookUpload());
             case INSTAGRAM:
-               socialMediaUploaders.add(new InstagramUpload());
+               socialMediaUploader.add(new InstagramUpload());
             default:
                throw new RuntimeException("Invalid Social Media");
          }
       });
-      return socialMediaUploaders;
+      return socialMediaUploader;
    }
 
    }

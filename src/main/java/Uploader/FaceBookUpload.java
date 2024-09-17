@@ -1,13 +1,13 @@
 package Uploader;
 
-public class FaceBookUpload implements SocialMediaUploader {
+public class FaceBookUpload implements ISocialMediaUploader {
     @Override
-    public boolean isPostValid(PostAttributes postAttribute) {
+    public boolean isPostValid(Post postAttribute) {
         return false;
     }
 
     @Override
-    public boolean uploadPost(PostAttributes postAttributes) {
+    public boolean uploadPost(Post postAttributes) {
         return false;
     }
 }

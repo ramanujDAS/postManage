@@ -10,14 +10,14 @@ import java.util.List;
 @Singleton
 public class PostUploader {
 
-    private final List<SocialMediaUploader> socialMediaUploader; // <1>
+    private final List<ISocialMediaUploader> socialMediaUploader; // <1>
 
-    public PostUploader(List<SocialMediaUploader> uploader) {
+    public PostUploader(List<ISocialMediaUploader> uploader) {
         this.socialMediaUploader = new ArrayList<>(uploader);
     }
 
-    public boolean uploadPost(PostAttributes postAttributes) {
-        for (SocialMediaUploader uploader : socialMediaUploader) {
+    public boolean uploadPost(Post postAttributes) {
+        for (ISocialMediaUploader uploader : socialMediaUploader) {
             try {
                 if (uploader.isPostValid(postAttributes)) {
                     return uploader.uploadPost(postAttributes);
