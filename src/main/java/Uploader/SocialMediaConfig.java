@@ -7,14 +7,13 @@ import lombok.Setter;
 
 
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
-import static Uploader.SocialMedia.*;
 
-@Setter
+
+
 @Getter
+@Setter
 @ConfigurationProperties("socialMediaUploader")
 public class SocialMediaConfig {
 
@@ -23,6 +22,10 @@ public class SocialMediaConfig {
 
     @NotNull
     private static List<Platform> platforms;
+
+    public List<Platform> getPlatforms() {
+        return platforms;
+    }
 
     @Setter
     @Getter
