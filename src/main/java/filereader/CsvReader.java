@@ -3,6 +3,7 @@ package filereader;
 
 import Uploader.Post;
 import jakarta.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,29 +15,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 @Singleton
+@Slf4j
 public class CsvReader implements FileReader {
-
-    private final String PROCESSED = "processed";
-
     @Override
     public List<Post> read(String filePath) throws IOException {
-
         Path tempFile = Files.createTempFile(null,null);
-
+        final String PROCESSED = "processed";
         List<List<String>> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new java.io.FileReader(filePath));
              BufferedWriter bw = new BufferedWriter(new java.io.FileWriter(filePath))) {
+
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",", -1);
-                if (values.length > 0 && values[0].equalsIgnoreCase(PROCESSED)) continue;
-                records.add(Arrays.asList(values));
+                try {
+                    String[] values = line.split(",", -1);
+                    if (values.length > 0 && values[0].equalsIgnoreCase(PROCESSED)) continue;
+                    records.add(Arrays.asList(values));
 
-                values[0] = PROCESSED;
-                bw.write(String.join(",", values));
-                bw.newLine();
-
+                    values[0] = PROCESSED;
+                    bw.write(String.join(",", values));
+                    bw.newLine();
+                }catch (Exception e) {
+                 log.error("found error in processing line of file {}",e.getMessage());
+                }
             }
          Files.move(tempFile, Paths.get(filePath), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
