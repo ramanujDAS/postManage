@@ -1,4 +1,4 @@
-package Uploader;
+package uploader;
 
 import io.micronaut.http.client.HttpClient;
 import jakarta.inject.Singleton;
@@ -6,22 +6,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Singleton
 @Slf4j
-public class ThreadsUploader implements SocialMediaUploader {
+public class InstagramUploader implements SocialMediaUploader {
     private final HttpClient httpClient;
 
-    public ThreadsUploader(HttpClient httpClient) {
+    public InstagramUploader(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
     @Override
     public boolean upload(SocialMediaPost post) {
-        log.info("Uploading to Threads: {}", post.getContent());
-        // Threads API implementation
+        log.info("Uploading to Instagram: {}", post.getContent());
+        // Instagram Graph API implementation
         return true;
     }
 
     @Override
     public PlatForm getPlatformName() {
-        return PlatForm.THREAD;
+        return PlatForm.INSTAGRAM;
     }
 }

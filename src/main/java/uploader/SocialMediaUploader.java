@@ -1,4 +1,4 @@
-package Uploader;
+package uploader;
 
 public interface SocialMediaUploader {
     boolean upload(SocialMediaPost post);

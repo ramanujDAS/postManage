@@ -1,4 +1,4 @@
-package Uploader;
+package uploader;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;

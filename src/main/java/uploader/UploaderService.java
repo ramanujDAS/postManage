@@ -1,4 +1,4 @@
-package Uploader;
+package uploader;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Value;

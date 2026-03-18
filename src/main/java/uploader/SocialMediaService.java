@@ -1,18 +1,17 @@
-package Uploader;
+package uploader;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 @Slf4j
 public class SocialMediaService {
-    private List<SocialMediaUploader> uploaderList;
+    private List<SocialMediaUploader> uploaderList = new ArrayList<>();
     @Inject
     UploaderService uploaderService;
 
