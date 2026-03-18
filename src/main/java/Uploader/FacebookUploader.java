@@ -14,14 +14,14 @@ public class FacebookUploader implements SocialMediaUploader {
     }
 
     @Override
-    public String upload(SocialMediaPost post) {
+    public boolean upload(SocialMediaPost post) {
         log.info("Uploading to Facebook: {}", post.getContent());
         // Facebook Graph API implementation
-        return "Facebook post uploaded successfully";
+        return true;
     }
 
     @Override
-    public String getPlatformName() {
-        return "facebook";
+    public PlatForm getPlatformName() {
+        return PlatForm.FACEBOOK;
     }
 }

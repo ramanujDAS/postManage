@@ -14,14 +14,13 @@ public class TwitterUploader implements SocialMediaUploader {
     }
 
     @Override
-    public String upload(SocialMediaPost post) {
+    public boolean upload(SocialMediaPost post) {
         log.info("Uploading to Twitter: {}", post.getContent());
         // Twitter API v2 implementation
-        return "Twitter post uploaded successfully";
+        return true;
     }
-
     @Override
-    public String getPlatformName() {
-        return "twitter";
+    public PlatForm getPlatformName() {
+        return PlatForm.TWITTER;
     }
 }

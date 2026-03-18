@@ -14,14 +14,14 @@ public class ThreadsUploader implements SocialMediaUploader {
     }
 
     @Override
-    public String upload(SocialMediaPost post) {
+    public boolean upload(SocialMediaPost post) {
         log.info("Uploading to Threads: {}", post.getContent());
         // Threads API implementation
-        return "Threads post uploaded successfully";
+        return true;
     }
 
     @Override
-    public String getPlatformName() {
-        return "threads";
+    public PlatForm getPlatformName() {
+        return PlatForm.THREAD;
     }
 }

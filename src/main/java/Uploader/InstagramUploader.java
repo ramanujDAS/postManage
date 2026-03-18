@@ -15,14 +15,14 @@ public class InstagramUploader implements SocialMediaUploader {
     }
 
     @Override
-    public String upload(SocialMediaPost post) {
+    public boolean upload(SocialMediaPost post) {
         log.info("Uploading to Instagram: {}", post.getContent());
         // Instagram Graph API implementation
-        return "Instagram post uploaded successfully";
+        return true;
     }
 
     @Override
-    public String getPlatformName() {
-        return "instagram";
+    public PlatForm getPlatformName() {
+        return PlatForm.INSTAGRAM;
     }
 }

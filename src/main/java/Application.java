@@ -1,5 +1,3 @@
-package com.example;
-
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
