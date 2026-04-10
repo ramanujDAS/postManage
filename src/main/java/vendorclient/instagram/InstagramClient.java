@@ -25,7 +25,7 @@ public class InstagramClient {
 
     private String postPath = "/post";
 
-    public Optional<InstgramResponse> upload(InstagramRequest request , String url) {
+    public Optional<InstgramResponse> upload(InstagramRequest request , String accessToken) {
         log.info("upload request received for instgaram {}", request);
         try {
 
@@ -54,7 +54,7 @@ public class InstagramClient {
 
     }
 
-    public Optional<String> getAccessToken(InstagramRequest request , String url) {
+    public Optional<String> getAccessToken(InstagramRequest request , String url , String tempToken){
         log.info("getAccessToken request received for instgaram {}", request);
         try {
 
@@ -74,7 +74,7 @@ public class InstagramClient {
                 return Optional.empty();
             }
         } catch (HttpClientResponseException hce) {
-            log.error(" getAccessToken :HttpClientResponseException while calling the instagram for customer={}", request);
+            log.error("getAccessToken :HttpClientResponseException while calling the instagram for customer={}", request);
             throw new RuntimeException(hce.getMessage());
         } catch (Exception e) {
             log.error(" getAccessToken:Exception while calling the instagram for customer={}", request);

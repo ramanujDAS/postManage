@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @ToString
 public class SocialMediaPost {
+    private String customerNo;
     private String content;
     private String imageUrl;
     private String videoUrl;
