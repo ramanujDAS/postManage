@@ -1,4 +1,4 @@
-package vendorclient.instagram;
+package vendorclient.instagram.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

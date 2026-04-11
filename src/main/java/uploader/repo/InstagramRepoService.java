@@ -24,7 +24,7 @@ public class InstagramRepoService implements IRepoService{
         if (StringUtils.isEmpty(contentId)) {
         log.error("contentId is missing in instagram post response");
         }
-        contentId = contentID;
+        this.contentID = contentId;
         return "1";
     }
 

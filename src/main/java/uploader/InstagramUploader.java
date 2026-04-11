@@ -7,6 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import uploader.repo.IRepoService;
 import uploader.repo.RepoFactory;
 import vendorclient.instagram.*;
+import vendorclient.instagram.model.InstagramContentPostRequest;
+import vendorclient.instagram.model.InstagramContentPostResponse;
+import vendorclient.instagram.model.InstagramRequest;
+import vendorclient.instagram.model.InstgramResponse;
 
 import java.util.Optional;
 
