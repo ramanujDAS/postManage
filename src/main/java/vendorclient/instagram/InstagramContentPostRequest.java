@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString
-@Setter
 @Getter
-public class InstgramResponse {
+@Setter
+@ToString
+public class InstagramContentPostRequest {
 
-    @JsonProperty("id")
-    private String contentId;
+    @JsonProperty("creation_id")
+    private String creationId;
+
+    private String customerNo;
 }

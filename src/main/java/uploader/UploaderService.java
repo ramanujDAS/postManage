@@ -8,14 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Singleton
 @Slf4j
 public class UploaderService {
 
-    @Value("platforms.enables")
-    private List<PlatForm> platformList;
+
+    private List<PlatForm> platformList = Arrays.asList(PlatForm.FACEBOOK ,PlatForm.INSTAGRAM ,PlatForm.THREAD ,PlatForm.TWITTER);
 
 
     @Inject

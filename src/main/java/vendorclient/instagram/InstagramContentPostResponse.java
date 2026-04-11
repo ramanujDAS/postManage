@@ -1,16 +1,16 @@
 package vendorclient.instagram;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString
+
 @Setter
 @Getter
-public class InstgramResponse {
+@ToString
+public class InstagramContentPostResponse {
 
     @JsonProperty("id")
-    private String contentId;
+    private String id ;
 }

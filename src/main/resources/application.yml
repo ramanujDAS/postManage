@@ -25,4 +25,9 @@ socialMediaUploader:
       password: password
       clientId: clientId
 
+platforms:
+   enables:
+     - INSTAGRAM
+     - FACEBOOK
+
 

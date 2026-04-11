@@ -20,24 +20,35 @@ import java.util.Optional;
 public class InstagramClient {
 
     @Inject
-    @Client(value = "${instagram.config.url}")
+    @Client(value = "https://graph.instagram.com")
     RxHttpClient httpClient;
 
-    private String postPath = "/post";
+    private String postContentPath = "/me/media";
+    private String getAccessTokenPath = "/oauth/authorize";
+    private String publishContentPath = "/me/media_publish";
 
     public Optional<InstgramResponse> upload(InstagramRequest request , String accessToken) {
         log.info("upload request received for instgaram {}", request);
         try {
+            String url = UriBuilder
+                    .of(postContentPath)
+                    .queryParam("access_token", accessToken)
+                    .build().toString();
+
+            log.info("final url :: {}",url );
 
             HttpResponse<InstgramResponse> responseHttpResponse = httpClient.toBlocking().exchange(
                     HttpRequest.POST(
                                     UriBuilder
-                                            .of(postPath)
-                                            .build(), request
+                                            .of(postContentPath)
+                                            .queryParam("access_token", accessToken)
+                                            .build().toString(), request
                             )
                             .contentType(MediaType.APPLICATION_JSON),
                     InstgramResponse.class
             );
+
+            log.info("post uploaded to instagram content holder {}" , responseHttpResponse.body());
 
             if (responseHttpResponse.getStatus().equals(HttpStatus.OK)) {
                 return Optional.ofNullable(responseHttpResponse.body());
@@ -45,10 +56,10 @@ public class InstagramClient {
                 return Optional.empty();
             }
         } catch (HttpClientResponseException hce) {
-            log.error(" upload:HttpClientResponseException while calling the instagram for customer={}", request);
+            log.error(" upload:HttpClientResponseException while calling the instagram for customer={}", request , hce);
             throw new RuntimeException(hce.getMessage());
         } catch (Exception e) {
-            log.error(" upload:Exception while calling the instagram for customer={}", request);
+            log.error(" upload:Exception while calling the instagram for customer={}", request , e);
             throw new RuntimeException(e.getMessage());
         }
 
@@ -61,7 +72,7 @@ public class InstagramClient {
             HttpResponse<String> responseHttpResponse = httpClient.toBlocking().exchange(
                     HttpRequest.POST(
                                     UriBuilder
-                                            .of(postPath)
+                                            .of(getAccessTokenPath)
                                             .build(), request
                             )
                             .contentType(MediaType.APPLICATION_JSON),
@@ -74,18 +85,48 @@ public class InstagramClient {
                 return Optional.empty();
             }
         } catch (HttpClientResponseException hce) {
-            log.error("getAccessToken :HttpClientResponseException while calling the instagram for customer={}", request);
+            log.error("getAccessToken :HttpClientResponseException while calling the instagram for customer={}", request, hce);
             throw new RuntimeException(hce.getMessage());
         } catch (Exception e) {
-            log.error(" getAccessToken:Exception while calling the instagram for customer={}", request);
+            log.error(" getAccessToken:Exception while calling the instagram for customer={}", request, e);
             throw new RuntimeException(e.getMessage());
         }
 
     }
 
+    public Optional<InstagramContentPostResponse> postContent(InstagramContentPostRequest request, String accessToken) {
+        log.info("postContent request received for instgaram {}", request);
+
+        try {
+            HttpResponse<InstagramContentPostResponse> responseHttpResponse = httpClient.toBlocking().exchange(
+                    HttpRequest.POST(
+                                    UriBuilder
+                                            .of(publishContentPath)
+                                            .queryParam("access_token", accessToken)
+                                            .build().toString(), request
+                            )
+                            .contentType(MediaType.APPLICATION_JSON),
+                    InstagramContentPostResponse.class
+            );
+
+            log.info("post uploaded to instagram content holder {}", responseHttpResponse.body());
+
+            if (responseHttpResponse.getStatus().equals(HttpStatus.OK)) {
+                return Optional.ofNullable(responseHttpResponse.body());
+            } else {
+                return Optional.empty();
+            }
+        } catch (HttpClientResponseException hce) {
+            log.error(" upload:HttpClientResponseException while calling the instagram for customer={}", request, hce);
+            throw new RuntimeException(hce.getMessage());
+        } catch (Exception e) {
+            log.error(" upload:Exception while calling the instagram for customer={}", request, e);
+            throw new RuntimeException(e.getMessage());
+        }
+
+
+    }
+
+
 
    }
-
-
-
-

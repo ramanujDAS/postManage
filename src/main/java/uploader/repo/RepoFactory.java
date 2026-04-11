@@ -1,12 +1,9 @@
 package uploader.repo;
 
 import io.micronaut.context.BeanContext;
-import io.micronaut.context.annotation.Bean;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import uploader.PlatForm;
-
-import java.lang.invoke.SwitchPoint;
 
 @Singleton
 public class RepoFactory {
@@ -20,7 +17,7 @@ public class RepoFactory {
 
         switch (platForm) {
             case INSTAGRAM:
-                return beanContext.getBean(InstgramRepoService.class);
+                return beanContext.getBean(InstagramRepoService.class);
             default:
                 throw new IllegalArgumentException();
         }

@@ -15,4 +15,7 @@ public class SocialMediaPost {
     private String imageUrl;
     private String videoUrl;
     private List<String> hashTags;
+    private String requestId;
+
+
 }
