@@ -7,6 +7,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.http.uri.UriBuilder;
+import io.micronaut.retry.annotation.Retryable;
 import io.micronaut.rxjava2.http.client.RxHttpClient;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -27,6 +28,7 @@ public class InstagramClient {
     private String getAccessTokenPath = "/oauth/authorize";
     private String publishContentPath = "/me/media_publish";
 
+    @Retryable(attempts = "5", delay = "2s", multiplier = "2")
     public Optional<InstgramResponse> upload(InstagramRequest request , String accessToken) {
         log.info("upload request received for instgaram {}", request);
         try {
@@ -65,6 +67,7 @@ public class InstagramClient {
 
     }
 
+    @Retryable(attempts = "5", delay = "2s", multiplier = "2")
     public Optional<String> getAccessToken(InstagramRequest request , String url , String tempToken){
         log.info("getAccessToken request received for instgaram {}", request);
         try {
@@ -94,6 +97,7 @@ public class InstagramClient {
 
     }
 
+    @Retryable(attempts = "5", delay = "2s", multiplier = "2")
     public Optional<InstagramContentPostResponse> postContent(InstagramContentPostRequest request, String accessToken) {
         log.info("postContent request received for instgaram {}", request);
 
@@ -109,7 +113,7 @@ public class InstagramClient {
                     InstagramContentPostResponse.class
             );
 
-            log.info("post uploaded to instagram content holder {}", responseHttpResponse.body());
+            log.info("content uploaded to instagram content{}", responseHttpResponse.body());
 
             if (responseHttpResponse.getStatus().equals(HttpStatus.OK)) {
                 return Optional.ofNullable(responseHttpResponse.body());
