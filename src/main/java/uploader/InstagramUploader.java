@@ -26,6 +26,8 @@ public class InstagramUploader implements SocialMediaUploader {
     public boolean upload(SocialMediaPost post) {
         try {
             log.info("Uploading to Instagram: {}", post.getContent());
+
+            //todo  need to put it in cadence like system
             IRepoService repoService = repoFactory.getRepoService(PlatForm.INSTAGRAM);
             String accessToken = repoService.getToken(post.getCustomerNo());
             Optional<InstgramResponse> instagramResponseOpt = instagramClient.upload(getReq(post), accessToken);
