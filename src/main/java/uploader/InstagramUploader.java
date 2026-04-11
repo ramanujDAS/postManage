@@ -82,7 +82,7 @@ public class InstagramUploader implements SocialMediaUploader {
 
             Optional<InstagramContentPostResponse> contentPostResponse = instagramClient.postContent(postRequest, accessToken);
             if (!contentPostResponse.isPresent()) {
-                log.error("instagram response not found while posting to Instagram for customer: {}", customerNo);
+                log.error("instagram response not found while content posting to Instagram for customer: {}", customerNo);
                 throw new IllegalArgumentException("instagram and contentId in response not found");
             }
             repoFactory
