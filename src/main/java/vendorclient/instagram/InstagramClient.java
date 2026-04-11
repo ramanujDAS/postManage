@@ -32,12 +32,6 @@ public class InstagramClient {
     public Optional<InstgramResponse> upload(InstagramRequest request , String accessToken) {
         log.info("upload request received for instgaram {}", request);
         try {
-            String url = UriBuilder
-                    .of(postContentPath)
-                    .queryParam("access_token", accessToken)
-                    .build().toString();
-
-            log.info("final url :: {}",url );
 
             HttpResponse<InstgramResponse> responseHttpResponse = httpClient.toBlocking().exchange(
                     HttpRequest.POST(
@@ -114,7 +108,6 @@ public class InstagramClient {
             );
 
             log.info("content uploaded to instagram content{}", responseHttpResponse.body());
-
             if (responseHttpResponse.getStatus().equals(HttpStatus.OK)) {
                 return Optional.ofNullable(responseHttpResponse.body());
             } else {
