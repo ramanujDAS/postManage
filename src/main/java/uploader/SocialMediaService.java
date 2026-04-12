@@ -34,7 +34,7 @@ public class SocialMediaService {
     public boolean uploadToPlatform(String platform, SocialMediaPost post) {
         SocialMediaUploader uploader = uploaderList.stream()
                 .filter(
-                        service -> service.getPlatformName().name().equals(platform))
+                        service -> service.getPlatformName().name().equalsIgnoreCase(platform))
                 .findFirst()
                 .orElseThrow(
                         () -> new IllegalArgumentException("platform not found")
