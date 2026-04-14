@@ -18,6 +18,8 @@ public class RepoFactory {
         switch (platForm) {
             case INSTAGRAM:
                 return beanContext.getBean(InstagramRepoService.class);
+            case THREAD:
+                return beanContext.getBean(ThreadRepoService.class);
             default:
                 throw new IllegalArgumentException();
         }
