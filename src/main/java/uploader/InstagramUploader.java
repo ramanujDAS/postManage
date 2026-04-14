@@ -41,9 +41,9 @@ public class InstagramUploader implements SocialMediaUploader {
             }
             repoService.saveContentId(post.getCustomerNo(), instagramResponseOpt.get().getContentId());
 
-            String contentID = repoService.getContentId(post.getCustomerNo() , post.getRequestId());
+            String contentID = repoService.getContentId(post.getCustomerNo(), post.getRequestId());
 
-            return publishContent(post.getCustomerNo(),contentID);
+            return publishContent(post.getCustomerNo(), contentID);
 
         } catch (Exception e) {
             log.error("Error occurred while posting to Instagram for customer: {}", post.getCustomerNo());
