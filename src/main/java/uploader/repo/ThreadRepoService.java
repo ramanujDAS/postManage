@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 @Singleton
 public class ThreadRepoService implements IRepoService{
 
-    private static String accessToken = "THAAN20SjRTpBBUVR1RUNsaVRtcFcyQUFaMWhPZADkyZAEdzVkRRVnlKQmlUOXM4dDdpSlRwMVAtYUppM0ZAfYmxKMlFEUk5oODVtS21FaWV2R2hDdjB0X0VyZAjY0aEdWQURSeUIyLXRreFVDQUxUd1J3aFRXT3lKM2RVTmdxUUtjU1JHNVNoc3VYNHhDcDY0M3luOUEwcEhXZAEo2ZAy1za2tjS1FEQXB5UQZDZD";
+    private static String accessToken = "THAAN20SjRTpBBUVNuTlBlRWU0SldLUTZAtb0VVenM0SVVUVVdWaVNkcl84N2FyanQ0cVpPcDJmQzZAYdlpIWW5jVzBuWmQtVXoyc005Y2NrVy1ISjNkTlA1bktlbzZACY29pejNWVF9TRkRDTFU3WkN3Q1RjSjlfeGluNHVWQWVVZAHlTc2N3a2xRME96TWRmV2FrNnVLa3k1ZATkzTmF5TU53T2JSY2JwdwZDZD";
     private static String contentId ="";
     @Override
     public String getToken(String customerNo) {

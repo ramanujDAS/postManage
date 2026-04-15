@@ -1,5 +1,6 @@
 package vendorclient.thread;
 
+import com.nimbusds.jose.util.JSONStringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -22,6 +23,7 @@ import vendorclient.thread.model.ThreadUploadReqest;
 import vendorclient.thread.model.ThreadUploadResponse;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,22 +47,21 @@ public class ThreadClient {
         log.info("upload request received for instagram {}", request);
         try {
 
-            HttpResponse<Map<String , String>> responseHttpResponse = httpClient.toBlocking().exchange(
+            HttpResponse<ThreadUploadResponse> responseHttpResponse = httpClient.toBlocking().exchange(
                     HttpRequest.POST(
                                     UriBuilder
                                             .of(postContentPath)
                                             .build(),getFormData(request)
                             )
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                            .accept(MediaType.ALL_TYPE),
+                    ThreadUploadResponse.class
             );
 
-            log.info("post uploaded to thread content holder {} {}" , responseHttpResponse.body(),responseHttpResponse);
+            log.info("post uploaded to thread content holder {} {}" , responseHttpResponse.getBody().get(),responseHttpResponse);
 
-            if (responseHttpResponse.getStatus().equals(HttpStatus.OK)) {
-                return Optional.ofNullable(responseHttpResponse.body());
-            } else {
-                return Optional.empty();
-            }
+
+            return Optional.of(responseHttpResponse.getBody().get());
 
         } catch (HttpClientResponseException hce) {
             String errorMessage = hce.getResponse().getBody(String.class).orElse("No body");
@@ -144,7 +145,7 @@ public class ThreadClient {
 
     private Map<String , String> getFormData(ThreadUploadReqest request){
 
-        HashMap<String , String> formData = new HashMap<>();
+        HashMap<String , String> formData = new LinkedHashMap<>();
         formData.put("media_type" , request.getMediaType());
         formData.put("image_url" , request.getImageUrl());
         formData.put("text" , request.getCaptionText());
