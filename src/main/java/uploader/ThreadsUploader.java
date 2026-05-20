@@ -26,7 +26,7 @@ public class ThreadsUploader implements SocialMediaUploader {
     @Override
     public boolean upload(SocialMediaPost post) {
         try {
-            log.info("Uploading to Threads: {}", post.getContent());
+            log.info("Uploading to Threads: {}", post);
 
             IRepoService repoService = repoFactory.getRepoService(PlatForm.THREAD);
             String accessToken = repoService.getToken(post.getCustomerNo());

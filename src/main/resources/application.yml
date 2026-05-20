@@ -1,3 +1,5 @@
+kind: Application
+
 micronaut:
   application:
     name: postManage
@@ -9,10 +11,21 @@ micronaut:
           secret:
             generator:
               secret: pleaseChangeThisSecretForANewOne
-netty:
-  default:
-    allocator:
-      max-order: 3
+  
+  datasources:
+    default:
+      url: jdbc:postgresql://localhost:5432/auth_db
+      username: postgres
+      password: yourpassword
+      driver-class-name: org.postgresql.Driver
+  
+  http:
+    client:
+      json-types:
+        - application/json
+        - text/plain
+        - application/octet-stream
+
 socialMediaUploader:
   - name: instagram
     credentials:
@@ -26,8 +39,6 @@ socialMediaUploader:
       clientId: clientId
 
 platforms:
-   enables:
-     - INSTAGRAM
-     - FACEBOOK
-
-
+  enabled:
+    - INSTAGRAM
+    - FACEBOOK

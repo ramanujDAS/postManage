@@ -44,24 +44,32 @@ public class ThreadClient {
     public Optional<ThreadUploadResponse> upload(ThreadUploadReqest request , String accessToken) {
 
         request.setAccessToken(accessToken);
-        log.info("upload request received for instagram {}", request);
+        log.info("upload request received for thread {}", request);
         try {
 
-            HttpResponse<ThreadUploadResponse> responseHttpResponse = httpClient.toBlocking().exchange(
+            HttpResponse<byte[]> responseHttpResponse = httpClient.toBlocking().exchange(
                     HttpRequest.POST(
                                     UriBuilder
                                             .of(postContentPath)
-                                            .build(),getFormData(request)
+                                            .queryParam("access_token" , accessToken)
+                                            .queryParam("media_type" , request.getMediaType())
+                                            .queryParam("image_url" , request.getImageUrl())
+                                            .build().toString(),"{}"
                             )
-                            .contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                            .accept(MediaType.ALL_TYPE),
-                    ThreadUploadResponse.class
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON),
+                    byte[].class
             );
 
-            log.info("post uploaded to thread content holder {} {}" , responseHttpResponse.getBody().get(),responseHttpResponse);
+            log.info("post uploaded to thread content holder {} " , new String(responseHttpResponse.getBody().get()));
+            log.info("post uploaded to thread content holder {} " , responseHttpResponse.getHeaders());
+            log.info("post uploaded to thread content holder {} " , responseHttpResponse.getStatus());
+            log.info("post uploaded to thread content holder {} " , responseHttpResponse.getContentType());
+            log.info("post uploaded to thread content holder {} " , responseHttpResponse.getContentLength());
 
 
-            return Optional.of(responseHttpResponse.getBody().get());
+
+            return Optional.empty();
 
         } catch (HttpClientResponseException hce) {
             String errorMessage = hce.getResponse().getBody(String.class).orElse("No body");
