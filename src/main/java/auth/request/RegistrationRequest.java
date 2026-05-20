@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 public class RegistrationRequest {
     @NonNull
-    String username;
+    String userName;
     @NonNull
     String password;
+    @NonNull
+    String emailId;
 }
 

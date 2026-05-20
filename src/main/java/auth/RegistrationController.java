@@ -23,12 +23,12 @@ public class RegistrationController {
 
     @Post
     public HttpResponse<?> register(@Body RegistrationRequest request) {
-        if (userRepository.findByUserName(request.getUsername()).isPresent()) {
+        if (userRepository.findByUserName(request.getUserName()).isPresent()) {
             return HttpResponse.status(HttpStatus.CONFLICT).body("Username already taken");
         }
         String hashedPassword = passwordEncoder.encode(request.getPassword());
 
-        User newUser = new User(request.getUsername(), hashedPassword);
+        User newUser = new User(request.getUserName(), hashedPassword, request.getEmailId());
         userRepository.saveUser(newUser);
 
         return HttpResponse.created("User registered successfully");

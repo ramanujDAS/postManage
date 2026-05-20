@@ -18,7 +18,7 @@ public class UserRepository {
     }
 
     public boolean saveUser(User user){
-        this.userName = user.getUsername();
+        this.userName = user.getUserName();
         this.passWord = user.getPassword();
         return true;
     }
