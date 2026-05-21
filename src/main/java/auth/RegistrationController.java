@@ -11,9 +11,11 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller("/register")
 @Secured(SecurityRule.IS_ANONYMOUS)
+@Slf4j
 public class RegistrationController {
 
     @Inject
@@ -23,6 +25,7 @@ public class RegistrationController {
 
     @Post
     public HttpResponse<?> register(@Body RegistrationRequest request) {
+        log.info("regustration {}" , request);
         if (userRepository.findByUserName(request.getUserName()).isPresent()) {
             return HttpResponse.status(HttpStatus.CONFLICT).body("Username already taken");
         }
@@ -31,6 +34,6 @@ public class RegistrationController {
         User newUser = new User(request.getUserName(), hashedPassword, request.getEmailId());
         userRepository.saveUser(newUser);
 
-        return HttpResponse.created("User registered successfully");
+        return HttpResponse.status(HttpStatus.CREATED);
     }
 }

@@ -10,16 +10,18 @@ import java.util.Optional;
 public class UserRepository {
     private String userName = "admin";
     private String passWord ="password";
+    private String email = "email";
 
     public Optional<User> findByUserName(String userName){
-        if(this.userName.equals(userName))
-            return Optional.of(new User(this.userName,this.passWord));
+        if(userName.equals(this.userName))
+            return Optional.of(new User(this.userName,this.passWord,this.email));
         return Optional.empty();
     }
 
     public boolean saveUser(User user){
         this.userName = user.getUserName();
         this.passWord = user.getPassword();
+        this.email = user.getEmailId();
         return true;
     }
 }
