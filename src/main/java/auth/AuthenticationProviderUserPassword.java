@@ -7,11 +7,13 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 
 import java.util.Collections;
 
 @Singleton
+@Slf4j
 public class AuthenticationProviderUserPassword implements AuthenticationProvider {
 
     @Inject
@@ -26,7 +28,9 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
             String username = authenticationRequest.getIdentity().toString();
             String password = authenticationRequest.getSecret().toString();
 
-            userRepository.findByUserName(username)
+            log.info("username {}: password {}" ,username ,password);
+
+            userRepository.findByUser(username)
                     .map(user -> {
                         if (passwordEncoder.matches(password ,user.getPassword())) {
                             emitter.onNext(AuthenticationResponse.success(username, Collections.emptyList()));

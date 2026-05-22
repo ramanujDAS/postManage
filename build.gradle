@@ -30,6 +30,11 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    runtimeOnly("com.h2database:h2")
+    implementation ("io.micronaut:micronaut-inject-java")
 }
 
 

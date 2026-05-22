@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS customer;
+CREATE TABLE customer (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    mobile VARCHAR(11),
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
