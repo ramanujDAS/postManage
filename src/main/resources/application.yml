@@ -9,7 +9,7 @@ micronaut:
               secret: "pleaseChangeThisSecretForANewOne"
 datasources:
   default:
-    url: jdbc:h2:mem:devDb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=runscript from 'classpath:schema.sql';
+    url: jdbc:h2:file:./data/userdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=runscript from 'classpath:schema.sql';
     driver-class-name: org.h2.Driver
     username: admin
     password: "admin"
