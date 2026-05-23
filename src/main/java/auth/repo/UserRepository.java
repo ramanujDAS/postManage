@@ -15,19 +15,20 @@ import java.util.Optional;
 
 
 @Singleton
-public class UserRepository  {
+public class UserRepository {
 
 
     private final DataSource dataSource;
+    private final int defaultLimit = 5;
 
     public UserRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Transactional
-    public Optional<User> findByUser(String userName){
+    public Optional<User> findByUser(String userName) {
 
-        String query ="SELECT username ,password FROM customer WHERE username = ?";
+        String query = "SELECT username ,password FROM customer WHERE username = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -36,7 +37,6 @@ public class UserRepository  {
                 if (rs.next()) {
                     User user = new User();
                     user.setUserName(rs.getString("username"));
-                    user.setPassword(rs.getString("password"));
                     return Optional.of(user);
                 }
             }
@@ -49,8 +49,8 @@ public class UserRepository  {
 
 
     @Transactional
-    public boolean saveUser(String userName , String password , String emailId , String mobileNo){
-        String query ="INSERT INTO customer (username, password, email, mobile) VALUES (?, ?,? ,?)";
+    public boolean saveUser(String userName, String password, String emailId, String mobileNo) {
+        String query = "INSERT INTO customer (username, password, email, mobile , limit) VALUES (?, ?,? ,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -58,6 +58,7 @@ public class UserRepository  {
             ps.setString(2, password);
             ps.setString(3, emailId);
             ps.setString(4, mobileNo);
+            ps.setString(5, String.valueOf(defaultLimit));
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -68,6 +69,65 @@ public class UserRepository  {
 
     }
 
+    @Transactional
+    public boolean updateLimit(String userName) {
+        String query = "UPDATE customer SET user_limit = user_limit - 1 WHERE username = ? AND user_limit > 0;";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, userName);
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error during insert", e);
+        }
+
+    }
+
+    @Transactional
+    public boolean updateLimitByAdmin(String userName) {
+        String query = "UPDATE customer SET user_limit = ? WHERE username = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, String.valueOf(defaultLimit));
+            ps.setString(2, userName);
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error during insert", e);
+        }
+
+    }
+
+    @Transactional
+    public int getUserLimit(String userName) {
+        String query = "SELECT user_limit from customer  WHERE username = ?;";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, userName);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("user_limit");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error during insert", e);
+        }
+       return 0;
+
+    }
 
 
 }
