@@ -37,7 +37,7 @@ datasources:
       configurations:
         frontend:
           allowed-origins:
-            - http://localhost:3000
+            - "*"
           allowed-methods:
             - GET
             - POST
