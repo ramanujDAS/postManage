@@ -50,7 +50,7 @@ public class UserRepository {
 
     @Transactional
     public boolean saveUser(String userName, String password, String emailId, String mobileNo) {
-        String query = "INSERT INTO customer (username, password, email, mobile , limit) VALUES (?, ?,? ,?,?)";
+        String query = "INSERT INTO customer (username, password, email, mobile , user_limit) VALUES (?, ?,? ,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
