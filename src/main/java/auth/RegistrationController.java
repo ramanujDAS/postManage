@@ -30,9 +30,9 @@ public class RegistrationController {
         if (userRepository.findByUser(request.getUserName()).isPresent()) {
             return HttpResponse.status(HttpStatus.CONFLICT).body("Username already taken");
         }
-        String hashedPassword = passwordEncoder.encode(request.getPassword());
+        ///String hashedPassword = passwordEncoder.encode(request.getPassword());
 
-        User newUser = new User(request.getUserName(), hashedPassword, request.getEmailId());
+        User newUser = new User(request.getUserName(), request.getPassword(), request.getEmailId());
         userRepository.saveUser(newUser.getUserName(), newUser.getPassword() , newUser.getEmailId() , StringUtils.EMPTY_STRING);
 
         return HttpResponse.status(HttpStatus.CREATED);

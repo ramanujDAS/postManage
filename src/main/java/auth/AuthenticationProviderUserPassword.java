@@ -2,6 +2,7 @@ package auth;
 
 import auth.repo.UserRepository;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.*;
 import io.reactivex.BackpressureStrategy;
@@ -15,6 +16,7 @@ import org.reactivestreams.Publisher;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @Singleton
 @Slf4j
@@ -40,20 +42,20 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
             if (("admin").equals(username) && ("12345").equals(password)) {
                 return AuthenticationResponse.success((String) authenticationRequest.getIdentity());
             }
+            try {
+                Optional<User> userOptional = userRepository.findByUser(username);
+                if (!userOptional.isPresent())
+                    return AuthenticationResponse.failure(AuthenticationFailureReason.USER_NOT_FOUND);
 
-            userRepository.findByUser(username)
-                    .map(user -> {
-                        if (passwordEncoder.matches(password ,user.getPassword())) {
-                            return (AuthenticationResponse.success(username, Collections.emptyList()));
-                        } else {
-                            return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
-                        }
-                    })
-                    .orElseGet(() -> {
-                        return AuthenticationResponse.failure(AuthenticationFailureReason.USER_NOT_FOUND);
+                if (userOptional.get().getPassword().equals(password))
+                    return (AuthenticationResponse.success(username, Collections.emptyList()));
+                else
+                    return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
+            }catch (Exception e){
+                log.error("username {} not able toi logged in", username,e);
+            }
 
-                    });
-          return AuthenticationResponse.failure();
+            return AuthenticationResponse.failure();
 
         }).subscribeOn(Schedulers.io());
     }

@@ -4,6 +4,7 @@ package auth.repo;
 import auth.User;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 
 @Singleton
+@Slf4j
 public class UserRepository {
 
 
@@ -28,7 +30,7 @@ public class UserRepository {
     @Transactional
     public Optional<User> findByUser(String userName) {
 
-        String query = "SELECT username ,password FROM customer WHERE username = ?";
+        String query = "SELECT username ,password,email FROM customer WHERE username = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -37,12 +39,17 @@ public class UserRepository {
                 if (rs.next()) {
                     User user = new User();
                     user.setUserName(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setEmailId(rs.getString("email"));
+                    log.info("user details {}" ,user );
                     return Optional.of(user);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Database error during select", e);
         }
+        log.info("user details is empty"  );
+
         return Optional.empty();
 
     }

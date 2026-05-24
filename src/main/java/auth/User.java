@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 @Introspected
-@Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
