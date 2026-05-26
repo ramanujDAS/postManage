@@ -1,6 +1,11 @@
 micronaut:
   security:
     enabled: true
+    intercept-url-map:
+        - pattern: "/**"
+          http-method: OPTIONS
+          access:
+              - isAnonymous()
     authentication: bearer
     token:
       basic-auth:

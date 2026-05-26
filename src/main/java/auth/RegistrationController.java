@@ -26,7 +26,6 @@ public class RegistrationController {
 
     @Post
     public HttpResponse<?> register(@Body RegistrationRequest request) {
-        log.info("regustration {}" , request);
         if (userRepository.findByUser(request.getUserName()).isPresent()) {
             return HttpResponse.status(HttpStatus.CONFLICT).body("Username already taken");
         }
