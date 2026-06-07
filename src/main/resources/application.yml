@@ -20,22 +20,6 @@ micronaut:
         generator:
            access-token:
              expiration: 86400
-datasources:
-  default:
-    url: jdbc:h2:file:./data/userdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=runscript from 'classpath:schema.sql';
-    driver-class-name: org.h2.Driver
-    username: admin
-    password: "admin"
-    dialect: H2
-    schema-generate: CREATE_DROP
-
-  
-  http:
-    client:
-      json-types:
-        - application/json
-        - text/plain
-        - application/octet-stream
   server:
     cors:
       enabled: true
@@ -57,6 +41,21 @@ datasources:
             - Content-Type
             - Authorization
           max-age: 1800
+  http:
+    client:
+      json-types:
+        - application/json
+        - text/plain
+        - application/octet-stream
+
+datasources:
+  default:
+    url: jdbc:h2:file:./data/userdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=runscript from 'classpath:schema.sql';
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: "admin"
+    dialect: H2
+    schema-generate: CREATE_DROP
 
 socialMediaUploader:
   - name: instagram

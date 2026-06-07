@@ -30,7 +30,7 @@ public class HttpFilter implements HttpServerFilter {
         if (request.getMethod() == io.micronaut.http.HttpMethod.OPTIONS) {
             String origin = request.getHeaders().get(HttpHeaders.ORIGIN);
             if (origin == null) {
-                origin = domainOriginUrl; // Fallback to your frontend origin
+                origin = "http://localhost:3000"; // Fallback to your frontend origin
             }
 
             MutableHttpResponse<?> preflightResponse = HttpResponse.status(HttpStatus.OK)
@@ -79,12 +79,13 @@ public class HttpFilter implements HttpServerFilter {
 
     private void updateSecurityHeaders(HttpResponse httpResponse){
         MutableHttpResponse mutableHttpResponse = (MutableHttpResponse) httpResponse;
+        String origin = "http://localhost:3000";
         mutableHttpResponse.header("Cache-Control" ,"no-cache");
         mutableHttpResponse.header("X-Content-Type-Options" ,"nosniff");
         mutableHttpResponse.header("X-Frame-Options" , "deny");
         mutableHttpResponse.header("X-XSS-Protection","1; mode=block");
         mutableHttpResponse.header("Strict-Transport-Security" , "max-age=86400;includedSubDomains");
-        mutableHttpResponse.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, domainOriginUrl);
+        mutableHttpResponse.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
         mutableHttpResponse.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
         mutableHttpResponse.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, PUT, DELETE, OPTIONS");
         mutableHttpResponse.getHeaders().set(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Content-Type, Authorization, Accept");

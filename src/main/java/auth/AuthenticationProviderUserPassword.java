@@ -34,25 +34,25 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
     @Override
     public Publisher<AuthenticationResponse> authenticate(HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
         return Flowable.fromCallable(() -> {
-            String username = authenticationRequest.getIdentity().toString();
+            String emailId = authenticationRequest.getIdentity().toString();
             String password = authenticationRequest.getSecret().toString();
 
-            log.info("username {}: password {}" ,username ,password);
+            log.info("emailId {}: password {}" ,emailId ,password);
 
-            if (("admin").equals(username) && ("12345").equals(password)) {
+            if (("admin").equals(emailId) && ("12345").equals(password)) {
                 return AuthenticationResponse.success((String) authenticationRequest.getIdentity());
             }
             try {
-                Optional<User> userOptional = userRepository.findByUser(username);
+                Optional<User> userOptional = userRepository.findByEmail(emailId);
                 if (!userOptional.isPresent())
                     return AuthenticationResponse.failure(AuthenticationFailureReason.USER_NOT_FOUND);
 
                 if (userOptional.get().getPassword().equals(password))
-                    return (AuthenticationResponse.success(username, Collections.emptyList()));
+                    return (AuthenticationResponse.success(emailId, Collections.emptyList()));
                 else
                     return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
             }catch (Exception e){
-                log.error("username {} not able toi logged in", username,e);
+                log.error("emailId {} not able toi logged in", emailId,e);
             }
 
             return AuthenticationResponse.failure();

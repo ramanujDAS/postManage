@@ -26,8 +26,8 @@ public class RegistrationController {
 
     @Post
     public HttpResponse<?> register(@Body RegistrationRequest request) {
-        if (userRepository.findByUser(request.getUserName()).isPresent()) {
-            return HttpResponse.status(HttpStatus.CONFLICT).body("Username already taken");
+        if (userRepository.findByEmail(request.getEmailId()).isPresent()) {
+            return HttpResponse.status(HttpStatus.CONFLICT).body("emailID already taken");
         }
         ///String hashedPassword = passwordEncoder.encode(request.getPassword());
 

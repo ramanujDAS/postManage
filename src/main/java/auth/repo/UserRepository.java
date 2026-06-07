@@ -54,6 +54,33 @@ public class UserRepository {
 
     }
 
+    @Transactional
+    public Optional<User> findByEmail(String emailID) {
+
+        String query = "SELECT username ,password,email FROM customer WHERE email = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, emailID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setUserName(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setEmailId(rs.getString("email"));
+                    log.info("user details {}" ,user );
+                    return Optional.of(user);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error during select", e);
+        }
+        log.info("user details is empty");
+
+        return Optional.empty();
+
+    }
+
 
     @Transactional
     public boolean saveUser(String userName, String password, String emailId, String mobileNo) {
@@ -77,13 +104,13 @@ public class UserRepository {
     }
 
     @Transactional
-    public boolean updateLimit(String userName) {
-        String query = "UPDATE customer SET user_limit = user_limit - 1 WHERE username = ? AND user_limit > 0;";
+    public boolean updateLimit(String email) {
+        String query = "UPDATE customer SET user_limit = user_limit - 1 WHERE email = ? AND user_limit > 0;";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ps.setString(1, userName);
+            ps.setString(1, email);
             int rowsAffected = ps.executeUpdate();
 
             return rowsAffected > 0;
@@ -96,13 +123,13 @@ public class UserRepository {
     }
 
     @Transactional
-    public boolean updateLimitByAdmin(String userName) {
-        String query = "UPDATE customer SET user_limit = ? WHERE username = ?";
+    public boolean updateLimitByAdmin(String emailId) {
+        String query = "UPDATE customer SET user_limit = ? WHERE email = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, String.valueOf(defaultLimit));
-            ps.setString(2, userName);
+            ps.setString(2, emailId);
             int rowsAffected = ps.executeUpdate();
 
             return rowsAffected > 0;
@@ -115,13 +142,13 @@ public class UserRepository {
     }
 
     @Transactional
-    public int getUserLimit(String userName) {
-        String query = "SELECT user_limit from customer  WHERE username = ?;";
+    public int getUserLimit(String emailid) {
+        String query = "SELECT user_limit from customer  WHERE email = ?;";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ps.setString(1, userName);
+            ps.setString(1, emailid);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("user_limit");
