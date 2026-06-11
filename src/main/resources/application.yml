@@ -2,10 +2,10 @@ micronaut:
   security:
     enabled: true
     intercept-url-map:
-        - pattern: "/**"
-          http-method: OPTIONS
-          access:
-              - isAnonymous()
+      - pattern: "/**"
+        http-method: OPTIONS
+        access:
+          - isAnonymous()
     authentication: bearer
     token:
       basic-auth:
@@ -18,8 +18,8 @@ micronaut:
             generator:
               secret: "pleaseChangeThisSecretForANewOne"
         generator:
-           access-token:
-             expiration: 86400
+          access-token:
+            expiration: 86400
   server:
     cors:
       enabled: true
