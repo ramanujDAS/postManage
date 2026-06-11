@@ -18,4 +18,5 @@ public class User {
     private String password;
     @NonNull
     private String emailId;
+    private String uuid;
 }

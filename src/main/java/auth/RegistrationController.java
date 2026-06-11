@@ -31,7 +31,7 @@ public class RegistrationController {
         }
         ///String hashedPassword = passwordEncoder.encode(request.getPassword());
 
-        User newUser = new User(request.getUserName(), request.getPassword(), request.getEmailId());
+        User newUser = new User(request.getUserName(), request.getPassword(), request.getEmailId(),"");
         userRepository.saveUser(newUser.getUserName(), newUser.getPassword() , newUser.getEmailId() , StringUtils.EMPTY_STRING);
 
         return HttpResponse.status(HttpStatus.CREATED);

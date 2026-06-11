@@ -57,7 +57,7 @@ public class UserRepository {
     @Transactional
     public Optional<User> findByEmail(String emailID) {
 
-        String query = "SELECT username ,password,email FROM customer WHERE email = ?";
+        String query = "SELECT username ,password,email,uuid_identifier FROM customer WHERE email = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -68,6 +68,7 @@ public class UserRepository {
                     user.setUserName(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
                     user.setEmailId(rs.getString("email"));
+                    user.setUuid(rs.getString("uuid_identifier"));
                     log.info("user details {}" ,user );
                     return Optional.of(user);
                 }
@@ -163,5 +164,25 @@ public class UserRepository {
 
     }
 
+    @Transactional
+    public String getUuidByUser(String email) {
 
+        String query = "SELECT uuid_identifier from customer  WHERE email = ?;";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("uuid_identifier");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error during insert", e);
+        }
+       return null;
+
+    }
 }

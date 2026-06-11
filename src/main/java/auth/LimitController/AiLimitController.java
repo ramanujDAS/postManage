@@ -53,4 +53,16 @@ public class AiLimitController {
         }).subscribeOn(Schedulers.io());
     }
 
+    @Post
+    public Publisher<? extends HttpResponse<?>> getUserUuid(Principal principal) {
+        return Flowable.fromCallable(() -> {
+            UuidBody body = new UuidBody();
+            log.info("update ai use limit api called for {}",principal.getName());
+            body.setUuid(limitService.getUuidByUser(principal.getName()));
+
+            return HttpResponse.status(HttpStatus.OK).body(body);
+
+        }).subscribeOn(Schedulers.io());
+    }
+
 }

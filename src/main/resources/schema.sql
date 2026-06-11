@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS customer (
     mobile VARCHAR(11),
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    user_limit INT NOT NULL DEFAULT 10
+    user_limit INT NOT NULL DEFAULT 10,
+   uuid_identifier VARCHAR(32) DEFAULT REPLACE(RANDOM_UUID(), '-', '') NOT NULL UNIQUE
+
 );
 

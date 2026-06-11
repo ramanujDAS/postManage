@@ -14,9 +14,7 @@ import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Singleton
 @Slf4j
@@ -47,8 +45,12 @@ public class AuthenticationProviderUserPassword implements AuthenticationProvide
                 if (!userOptional.isPresent())
                     return AuthenticationResponse.failure(AuthenticationFailureReason.USER_NOT_FOUND);
 
-                if (userOptional.get().getPassword().equals(password))
-                    return (AuthenticationResponse.success(emailId, Collections.emptyList()));
+                if (userOptional.get().getPassword().equals(password)){
+                    Map<String , Object> attr = new HashMap<>();
+                    attr.put("uuid" , userOptional.get().getUuid());
+                    return AuthenticationResponse.success(emailId ,attr);
+                }
+
                 else
                     return AuthenticationResponse.failure(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH);
             }catch (Exception e){

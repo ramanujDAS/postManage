@@ -30,4 +30,8 @@ public class LimitService {
 
         return isUpdated;
     }
+
+    public String getUuidByUser(String email){
+        return userRepository.getUuidByUser(email);
+    }
 }
