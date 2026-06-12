@@ -53,7 +53,7 @@ public class AiLimitController {
         }).subscribeOn(Schedulers.io());
     }
 
-    @Post
+    @Get("/uuid")
     public Publisher<? extends HttpResponse<?>> getUserUuid(Principal principal) {
         return Flowable.fromCallable(() -> {
             UuidBody body = new UuidBody();
